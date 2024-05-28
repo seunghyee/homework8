@@ -38,7 +38,7 @@ int main()
    int key;
    Node* head = NULL;
    Node* ptr = NULL;   /* temp */
-
+// 사용자가 'q' 또는 'Q'를 입력할 때까지 반복하여 명령을 수행
    do{
       printf("\n\n");
       printf("----- [2023078010]  [sonseunghye] ------\n");
@@ -55,27 +55,27 @@ int main()
       printf("Command = ");
       scanf(" %c", &command);
 
-      switch(command) {
+     switch(command) {
       case 'z': case 'Z':
-         initializeBST(&head);
+         initializeBST(&head);   // 이진 탐색 트리 초기화
          break;
       case 'q': case 'Q':
-         freeBST(head);
+         freeBST(head);           // 이진 탐색 트리에 할당된 모든 메모리를 해제하고 프로그램을 종료
          break;
       case 'n': case 'N':
          printf("Your Key = ");
          scanf("%d", &key);
-         insert(head, key);
+         insert(head, key);      // 사용자로부터 키 값을 입력받아 이진 탐색 트리에 노드를 삽입
          break;
       case 'd': case 'D':
          printf("Your Key = ");
          scanf("%d", &key);
-         deleteLeafNode(head, key);
+         deleteLeafNode(head, key);  // 사용자로부터 키 값을 입력받아 해당하는 리프 노드를 삭제
          break;
       case 'f': case 'F':
          printf("Your Key = ");
          scanf("%d", &key);
-         ptr = searchIterative(head, key);
+         ptr = searchIterative(head, key);  // 사용자로부터 키 값을 입력받아 해당하는 노드를 반복적으로 찾음
          if(ptr != NULL)
             printf("\n node [%d] found at %p\n", ptr->key, ptr);
          else
@@ -84,7 +84,7 @@ int main()
       case 's': case 'S':
          printf("Your Key = ");
          scanf("%d", &key);
-         ptr = searchRecursive(head->left, key);
+         ptr = searchRecursive(head->left, key);  // 사용자로부터 키 값을 입력받아 해당하는 노드를 재귀적으로 찾음
          if(ptr != NULL)
             printf("\n node [%d] found at %p\n", ptr->key, ptr);
          else
@@ -92,20 +92,20 @@ int main()
          break;
 
       case 'i': case 'I':
-         inorderTraversal(head->left);
+         inorderTraversal(head->left);   // 이진 탐색 트리를 중위 순회하여 노드의 키 값을 출력
          break;
       case 'p': case 'P':
-         preorderTraversal(head->left);
+         preorderTraversal(head->left);  // 이진 탐색 트리를 전위 순회하여 노드의 키 값을 출력
          break;
       case 't': case 'T':
-         postorderTraversal(head->left);
+         postorderTraversal(head->left); // 이진 탐색 트리를 후위 순회하여 노드의 키 값을 출력
          break;
       default:
-         printf("\n       >>>>>   Concentration!!   <<<<<     \n");
+         printf("\n       >>>>>   Concentration!!   <<<<<     \n");  // 잘못된 명령이 입력됐을 때 메시지를 출력
          break;
       }
 
-   }while(command != 'q' && command != 'Q');
+   } while(command != 'q' && command != 'Q');  // 'q' 또는 'Q'가 입력될 때까지 반복
 
    return 1;
 }
@@ -114,7 +114,7 @@ int initializeBST(Node** h) {
 
    /* if the tree is not empty, then remove all allocated nodes from the tree*/
    if(*h != NULL)
-      freeBST(*h);
+      freeBST(*h);// 트리가 비어있지 않은 경우, 모든 할당된 노드를 해제
 
    /* create a head node */
    *h = (Node*)malloc(sizeof(Node));
@@ -126,35 +126,37 @@ int initializeBST(Node** h) {
 
 
 
+//이진 탐색 트리를 재귀적으로 중위 순회
 void inorderTraversal(Node* ptr)
 {
     if (ptr) {
         inorderTraversal(ptr->left);
-        printf("%d ", ptr->key);
+        printf("%d ", ptr->key); // 노드의 키 값을 출력
         inorderTraversal(ptr->right);
     }
 }
 
+//이진 탐색 트리를 재귀적으로 전위 순회
 void preorderTraversal(Node* ptr)
 {
     if (ptr) {
-        printf("%d ", ptr->key);
+        printf("%d ", ptr->key); // 노드의 키 값을 출력
         preorderTraversal(ptr->left);
         preorderTraversal(ptr->right);
     }
 }
 
+//이진 탐색 트리를 재귀적으로 후위 순회
 void postorderTraversal(Node* ptr)
 {
     if (ptr) {
         postorderTraversal(ptr->left);
         postorderTraversal(ptr->right);
-        printf("%d ", ptr->key);
+        printf("%d ", ptr->key); // 노드의 키 값을 출력
     }
 }
 
-
-
+//주어진 키 값을 가진 노드를 이진 탐색 트리에 삽입
 int insert(Node* head, int key)
 {
     Node* newNode = (Node*)malloc(sizeof(Node));
@@ -189,7 +191,7 @@ int insert(Node* head, int key)
     return 1;
 }
 
-
+//이진 탐색 트리에서 주어진 키 값을 가진 리프 노드를 삭제
 int deleteLeafNode(Node* head, int key)
 {
     if (head == NULL || head->left == NULL)
@@ -219,7 +221,7 @@ int deleteLeafNode(Node* head, int key)
     return 0; // 노드를 찾지 못함
 }
 
-
+//이진 탐색 트리에서 주어진 키 값을 재귀적으로 검색
 Node* searchRecursive(Node* ptr, int key)
 {
     if (ptr == NULL || ptr->key == key)
@@ -230,6 +232,7 @@ Node* searchRecursive(Node* ptr, int key)
         return searchRecursive(ptr->right, key);
 }
 
+//이진 탐색 트리에서 주어진 키 값을 반복적으로 검색
 Node* searchIterative(Node* head, int key)
 {
     Node* current = head->left;
@@ -244,8 +247,7 @@ Node* searchIterative(Node* head, int key)
     return NULL;
 }
 
-
-
+//이진 탐색 트리에 할당된 모든 메모리를 해제
 int freeBST(Node* head)
 {
     if (head == NULL)
